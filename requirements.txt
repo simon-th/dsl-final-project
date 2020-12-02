@@ -1,8 +1,0 @@
-cloudpickle==1.6.0
-future==0.18.2
-gym==0.17.3
-numpy==1.19.4
-opencv-python==4.4.0.46
-pyglet==1.5.0
-scipy==1.5.4
--e git+git@github.com:hardmaru/slimevolleygym.git@e840033232ddd03c455ffa6d656abaac5212d1af#egg=slimevolleygym
