@@ -1,4 +1,5 @@
-SLIMEVOLLEYGYM_PATH = ./slimevolleygym
+include .env
+export
 
 test-state:
 	python $(SLIMEVOLLEYGYM_PATH)/test_state.py
@@ -8,6 +9,9 @@ test-pixel:
 
 test-atari:
 	python $(SLIMEVOLLEYGYM_PATH)/test_atari.py
+
+eval-agents:
+	$(SLIMEVOLLEYGYM_PATH)/eval_agents.sh
 
 pip-freeze:
 	pip freeze > requirements.txt

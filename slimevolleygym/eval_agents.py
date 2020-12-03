@@ -26,6 +26,7 @@ import gym
 import os
 import numpy as np
 import argparse
+import pathlib
 import slimevolleygym
 from slimevolleygym.mlp import makeSlimePolicy, makeSlimePolicyLite # simple pretrained models
 from slimevolleygym import BaselinePolicy
@@ -105,11 +106,13 @@ if __name__=="__main__":
       return False
     return True
 
+  parent_dir = pathlib.Path(__file__).parent
+
   PATH = {
     "baseline": None,
-    "ppo": "zoo/ppo/best_model.zip",
-    "cma": "zoo/cmaes/slimevolley.cma.64.96.best.json",
-    "ga": "zoo/ga_sp/ga.json",
+    "ppo": parent_dir / "zoo/ppo/best_model.zip",
+    "cma": parent_dir / "zoo/cmaes/slimevolley.cma.64.96.best.json",
+    "ga": parent_dir / "zoo/ga_sp/ga.json",
     "random": None,
   }
 
