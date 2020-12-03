@@ -17,11 +17,6 @@ ga: Genetic algorithm with tiny network trained using simple tournament selectio
 random: random action agent
 """
 
-import warnings
-# numpy warnings because of tensorflow
-warnings.filterwarnings("ignore", category=FutureWarning, module='tensorflow')
-warnings.filterwarnings("ignore", category=UserWarning, module='gym')
-
 import gym
 import os
 import numpy as np
@@ -33,6 +28,24 @@ from slimevolleygym import BaselinePolicy
 from time import sleep
 
 #import cv2
+
+import warnings
+# numpy warnings because of tensorflow
+warnings.filterwarnings("ignore", category=FutureWarning, module='tensorflow')
+warnings.filterwarnings("ignore", category=UserWarning, module='gym')
+# Filter tensorflow version warnings
+# https://github.com/hill-a/stable-baselines/issues/298#issuecomment-637613817
+# https://stackoverflow.com/questions/40426502/is-there-a-way-to-suppress-the-messages-tensorflow-prints/40426709
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'  # or any {'0', '1', '2'}
+import warnings
+# https://stackoverflow.com/questions/15777951/how-to-suppress-pandas-future-warning
+warnings.simplefilter(action='ignore', category=FutureWarning)
+warnings.simplefilter(action='ignore', category=Warning)
+import tensorflow as tf
+tf.get_logger().setLevel('INFO')
+tf.autograph.set_verbosity(0)
+import logging
+tf.get_logger().setLevel(logging.ERROR)
 
 np.set_printoptions(threshold=20, precision=4, suppress=True, linewidth=200)
 
