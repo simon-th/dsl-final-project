@@ -28,7 +28,7 @@ def mutate(length, mutation_rate, mutation_sigma):
 # Log results and get trained model location
 from library import util
 
-args = util.getargs(logdir = 'ga_selfplay_spike', modelpath = '../zoo/ga_sp/ga.json')
+args = util.get_args(logdir = 'ga_selfplay_spike', modelpath = '../zoo/ga_sp/ga.json')
 
 LOGDIR = args.logdir
 if not os.path.exists(LOGDIR):

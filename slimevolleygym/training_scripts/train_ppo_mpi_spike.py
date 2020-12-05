@@ -21,7 +21,7 @@ EVAL_EPISODES = 1000
 # Log results and get trained model location
 from library import util
 
-args = util.getargs(logdir = 'ppo_mpi_spike', modelpath = '../zoo/ppo/best_model.zip')
+args = util.get_args(logdir = 'ppo_mpi_spike', modelpath = '../zoo/ppo/best_model.zip')
 
 LOGDIR = args.logdir
 if not os.path.exists(LOGDIR):
