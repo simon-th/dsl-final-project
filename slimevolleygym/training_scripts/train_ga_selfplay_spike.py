@@ -14,7 +14,7 @@ from slimevolleygym import multiagent_rollout as rollout
 # Settings
 random_seed = 612
 population_size = 128
-total_tournaments = 500000
+total_tournaments = 100000
 save_freq = 1000
 
 def mutate(length, mutation_rate, mutation_sigma):
