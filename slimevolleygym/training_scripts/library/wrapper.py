@@ -17,11 +17,7 @@ class SpikeWrapper(gym.RewardWrapper):
     xPosBall, yPosBall, xVelBall, yVelBall = observation[4:8]
     if (yPosBall > self.criteria["Height"] and xVelBall < self.criteria["HorizontalSpeed"]):
       reward = self.reward(reward)
-      print(xPosBall, yPosBall, xVelBall, yVelBall)
-
     return reward
 
   def reward(self, reward):
-    if reward >= 0:
-      reward += 0.4
-    return reward
+    return reward + 0.4
