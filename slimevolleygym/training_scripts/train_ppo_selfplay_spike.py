@@ -16,27 +16,32 @@ from shutil import copyfile # keep track of generations
 
 # Settings
 SEED = 17
-NUM_TIMESTEPS = int(1e9)
+NUM_TIMESTEPS = int(2e6)
 EVAL_FREQ = int(1e5)
 EVAL_EPISODES = int(1e2)
 BEST_THRESHOLD = 0.5 # must achieve a mean score above this to replace prev best self
 
 RENDER_MODE = False # set this to false if you plan on running for full 1000 trials.
 
-# Log results and get trained model location
+# Log results
 from library import util
+from library import wrapper
 
-args = util.get_args(logdir = 'ppo_selfplay_spike', modelpath = '../zoo/ppo/best_model.zip')
-
+args = util.get_args(logdir = 'ppo_selfplay_spike', modelpath = '../zoo/ppo_sp/history_00000144.zip')
 LOGDIR = args.logdir
 if not os.path.exists(LOGDIR):
   os.makedirs(LOGDIR)
-PPO_PATH = args.modelpath
 
-class SlimeVolleySelfPlayEnv(slimevolleygym.SlimeVolleyEnv):
+BEST_MODEL_PATH = args.modelpath
+if not os.path.exists(BEST_MODEL_PATH):
+  raise Exception('File does not exist:', BEST_MODEL_PATH)
+
+
+
+class SlimeVolleySelfPlayEnv(wrapper.SpikeWrapper):
   # wrapper over the normal single player env, but loads the best self play model
   def __init__(self):
-    super(SlimeVolleySelfPlayEnv, self).__init__()
+    super(SlimeVolleySelfPlayEnv, self).__init__(slimevolleygym.SlimeVolleyEnv())
     self.policy = self
     self.best_model = None
     self.best_model_filename = None
@@ -105,9 +110,7 @@ def train():
   env = SlimeVolleySelfPlayEnv()
   env.seed(SEED)
 
-  # take mujoco hyperparams (but doubled timesteps_per_actorbatch to cover more steps.)
-  model = PPO1(MlpPolicy, env, timesteps_per_actorbatch=4096, clip_param=0.2, entcoeff=0.0, optim_epochs=10,
-                   optim_stepsize=3e-4, optim_batchsize=64, gamma=0.99, lam=0.95, schedule='linear', verbose=2)
+  model = PPO1.load(BEST_MODEL_PATH, env=env)
 
   eval_callback = SelfPlayCallback(env,
     best_model_save_path=LOGDIR,
