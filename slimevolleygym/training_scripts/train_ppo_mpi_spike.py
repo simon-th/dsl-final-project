@@ -17,7 +17,13 @@ NUM_TIMESTEPS = int(2e8)
 SEED = 831
 EVAL_FREQ = 200000
 EVAL_EPISODES = 1000
-LOGDIR = "ppo1_mpi_spike"
+# Log results
+from library import util
+
+LOGDIR = util.get_logdir('ppo1_mpi_spike')
+
+if not os.path.exists(LOGDIR):
+  os.makedirs(LOGDIR)
 
 PPO_PATH = "../zoo/ppo/best_model.zip"
 
