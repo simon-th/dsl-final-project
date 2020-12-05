@@ -7,10 +7,10 @@ MIN_ANGLE = 30
 MAX_ANGLE = 60
 OPTIMAL_ANGLE = 45
 
-class RewardWrapperArc(RewardWrapper):
+class ArcWrapper(RewardWrapper):
 
     def __init__(self, env):
-        super(RewardWrapperArc, self).__init__(env)
+        super(ArcWrapper, self).__init__(env)
         self.i = 0
         self.last_obs = [0 for _ in range(12)]
         self.new_reward = 0
@@ -26,8 +26,8 @@ class RewardWrapperArc(RewardWrapper):
         print()
 
 
-    def step(self, action):
-        observation, reward, done, info = self.env.step(action)
+    def step(self, action, otherAction=None):
+        observation, reward, done, info = self.env.step(action, otherAction)
         return observation, self.check_reward(observation, reward), done, info
 
     def check_reward(self, observation, reward):

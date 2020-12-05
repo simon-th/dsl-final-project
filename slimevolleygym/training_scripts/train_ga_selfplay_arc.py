@@ -10,7 +10,7 @@ import slimevolleygym
 import slimevolleygym.mlp as mlp
 from slimevolleygym.mlp import Model
 from slimevolleygym import multiagent_rollout as rollout
-from wrapper.reward_wrapper_arc import RewardWrapperArc
+from library.arc_wrapper import ArcWrapper
 
 # Settings
 random_seed = 612
@@ -53,7 +53,7 @@ population = population + model_params
 winning_streak = [0] * population_size # store the number of wins for this agent (including mutated ones)
 
 # create the gym environment, and seed it
-env = RewardWrapperArc(gym.make("SlimeVolley-v0"))
+env = ArcWrapper(gym.make("SlimeVolley-v0"))
 env.seed(random_seed)
 np.random.seed(random_seed)
 
