@@ -56,8 +56,8 @@ print(population)
 print(population.shape)
 
 # create the gym environment, and seed it. Use the spike wrapper to change rewards
-from library import spikewrapper
-env = spikewrapper.spikewrapper(gym.make("SlimeVolley-v0"))
+from library import wrapper
+env = wrapper.SpikeWrapper(gym.make("SlimeVolley-v0"))
 env.seed(random_seed)
 np.random.seed(random_seed)
 

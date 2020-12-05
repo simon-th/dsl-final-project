@@ -1,8 +1,8 @@
 import gym
 
-class spikewrapper(gym.RewardWrapper):
+class SpikeWrapper(gym.RewardWrapper):
   def __init__(self, env):
-    super(spikewrapper, self).__init__(env)
+    super(SpikeWrapper, self).__init__(env)
     self.criteria = {
       "Height": 1.5,
       "HorizontalSpeed": -1.3,
