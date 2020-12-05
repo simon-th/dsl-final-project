@@ -17,35 +17,6 @@ population_size = 128
 total_tournaments = 500000
 save_freq = 1000
 
-# Reward Wrapper
-class HorizontalHeightWrapper(gym.RewardWrapper):
-  def __init__(self, env):
-    super(HorizontalHeightWrapper, self).__init__(env)
-    self.criteria = {
-      "Height": 1.0,
-      "HorizontalSpeed": -1.5,
-    }
-
-  def step(self, action, otherAction=None):
-    observation, reward, done, info = self.env.step(action, otherAction)
-    checkedreward = self.checkreward(observation, reward)
-    return observation, checkedreward, done, info
-
-  def checkreward(self, observation, reward):
-    # print("observation:", observation, "reward:", reward)
-    xPosBall, yPosBall, xVelBall, yVelBall = observation[4:8]
-    # print(xPosBall, yPosBall, xVelBall, yVelBall)
-    if (yPosBall > self.criteria["Height"] and xVelBall < self.criteria["HorizontalSpeed"]):
-      reward = self.reward(reward)
-    return reward
-
-  def reward(self, reward):
-    if reward > 0:
-      reward += 0.4
-      print("got reward")
-    return reward
-
-
 def mutate(length, mutation_rate, mutation_sigma):
   # (not used, in case I wanted to do partial mutations)
   # create an additive mutation vector of some size
@@ -61,7 +32,6 @@ LOGDIR = util.get_logdir('ga_selfplay_spike')
 
 if not os.path.exists(LOGDIR):
   os.makedirs(LOGDIR)
-
 
 # Create two instances of a feed forward policy we may need later.
 policy_left = Model(mlp.games['slimevolleylite'])
@@ -85,8 +55,9 @@ population = population + model_params
 print(population)
 print(population.shape)
 
-# create the gym environment, and seed it
-env = HorizontalHeightWrapper(gym.make("SlimeVolley-v0"))
+# create the gym environment, and seed it. Use the spike wrapper to change rewards
+from library import spikewrapper
+env = spikewrapper.spikewrapper(gym.make("SlimeVolley-v0"))
 env.seed(random_seed)
 np.random.seed(random_seed)
 
@@ -115,7 +86,7 @@ for tournament in range(1, total_tournaments+1):
     winning_streak[m] += 1
 
   if tournament % save_freq == 0:
-    model_filename = os.path.join(logdir, "ga_"+str(tournament).zfill(8)+".json")
+    model_filename = os.path.join(LOGDIR, "ga_"+str(tournament).zfill(8)+".json")
     with open(model_filename, 'wt') as out:
       record_holder = np.argmax(winning_streak)
       record = winning_streak[record_holder]
