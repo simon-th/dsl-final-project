@@ -13,22 +13,24 @@ from stable_baselines.common.policies import MlpPolicy
 from stable_baselines import bench, logger, PPO1
 from stable_baselines.common.callbacks import EvalCallback
 
-NUM_TIMESTEPS = int(2e8)
+NUM_TIMESTEPS = int(2e6)
 SEED = 831
 EVAL_FREQ = 200000
 EVAL_EPISODES = 1000
-# Log results
+
+# Log results and get trained model location
 from library import util
 
-LOGDIR = util.get_logdir('ppo1_mpi_spike')
+args = util.getargs(logdir = 'ppo_mpi_spike', modelpath = '../zoo/ppo/best_model.zip')
 
+LOGDIR = args.logdir
 if not os.path.exists(LOGDIR):
   os.makedirs(LOGDIR)
-
-PPO_PATH = "../zoo/ppo/best_model.zip"
+PPO_PATH = args.modelpath
 
 from library import wrapper
 def make_env(seed):
+  # Add spike wrapper to environment
   env = wrapper.SpikeWrapper(gym.make("SlimeVolley-v0"))
   env.seed(seed)
   return env
@@ -51,6 +53,7 @@ def train():
   env = bench.Monitor(env, logger.get_dir() and os.path.join(logger.get_dir(), str(rank)))
   env.seed(workerseed)
 
+  # Load trained model
   model = PPO1.load(PPO_PATH, env)
 
   eval_callback = EvalCallback(env, best_model_save_path=LOGDIR, log_path=LOGDIR, eval_freq=EVAL_FREQ, n_eval_episodes=EVAL_EPISODES)

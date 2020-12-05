@@ -25,13 +25,15 @@ def mutate(length, mutation_rate, mutation_sigma):
   noise = np.random.normal(size=length) * mutation_sigma
   return mask * noise
 
-# Log results
+# Log results and get trained model location
 from library import util
 
-LOGDIR = util.get_logdir('ga_selfplay_spike')
+args = util.getargs(logdir = 'ga_selfplay_spike', modelpath = '../zoo/ga_sp/ga.json')
 
+LOGDIR = args.logdir
 if not os.path.exists(LOGDIR):
   os.makedirs(LOGDIR)
+GA_PATH = args.modelpath
 
 # Create two instances of a feed forward policy we may need later.
 policy_left = Model(mlp.games['slimevolleylite'])
@@ -44,10 +46,9 @@ population = np.random.normal(size=(population_size, param_count)) * 0.5 # each 
 winning_streak = [0] * population_size # store the number of wins for this agent (including mutated ones)
 
 # Load best model
-BEST_MODEL_PATH = '../zoo/ga_sp/ga.json'
-with open(BEST_MODEL_PATH) as f:
+with open(GA_PATH) as f:
   data = json.load(f)
-print('loading file %s' % (BEST_MODEL_PATH))
+print('loading file %s' % (GA_PATH))
 model_params = np.array(data[0])
 
 # Set the population as the best model params with a little noise
@@ -55,8 +56,9 @@ population = population + model_params
 print(population)
 print(population.shape)
 
-# create the gym environment, and seed it. Use the spike wrapper to change rewards
+# create the gym environment, and seed it.
 from library import wrapper
+# Use the spike wrapper to change rewards
 env = wrapper.SpikeWrapper(gym.make("SlimeVolley-v0"))
 env.seed(random_seed)
 np.random.seed(random_seed)
