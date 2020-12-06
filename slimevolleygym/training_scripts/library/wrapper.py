@@ -2,9 +2,10 @@ import gym
 
 RESTING_HEIGHT = 0.15
 AGENT_BALL_EUCLID_DIST = 0.044
-AGENT_MAX_LEFT_POS = 0.2
+AGENT_AGAINST_FENCE_POS = 0.2
+AGENT_FENCE_RANGE = 1.0
 BALL_MAX_VELOCITY = -2
-SPIKE_REWARD = 0.3
+SPIKE_REWARD = 0.1
 
 class SpikeWrapper(gym.RewardWrapper):
   def __init__(self, env, printSpikes = False):
@@ -18,6 +19,7 @@ class SpikeWrapper(gym.RewardWrapper):
     if self.ballOnAgentSide(xBall) and \
        self.ballCollidedWithAgent(obs) and \
        self.agentJumping(yAgent) and \
+       self.agentCloseToFence(xAgent) and \
        self.agentMovingLeftOrTouchingFence(xAgent, xVelAgent) and \
        self.ballMovingFastEnoughLeft(xVelBall):
       return True
@@ -43,8 +45,11 @@ class SpikeWrapper(gym.RewardWrapper):
   def agentJumping(self, yAgent):
     return yAgent > (RESTING_HEIGHT+0.05)
 
+  def agentCloseToFence(self, xAgent):
+    return xAgent < AGENT_FENCE_RANGE
+
   def agentMovingLeftOrTouchingFence(self, xAgent, xVelAgent):
-    return xAgent == AGENT_MAX_LEFT_POS or xVelAgent < 0
+    return xAgent == AGENT_AGAINST_FENCE_POS or xVelAgent < 0
 
   def ballMovingFastEnoughLeft(self, xVelBall):
     return xVelBall < BALL_MAX_VELOCITY
