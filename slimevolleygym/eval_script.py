@@ -127,7 +127,7 @@ def evaluate_agents(test_agents, benchmark_agents, render_mode=False, n_trials=1
 
       # print("history dump:", history)
 
-      print(test_model_name, "vs", benchmark_agent, ":", np.round(np.mean(history), 3), "±", np.round(np.std(history), 3))
+      print(test_model_name, "vs", benchmark_model_name, ":", np.round(np.mean(history), 3), "±", np.round(np.std(history), 3))
 
       results[benchmark_model_name + "_mean"].append(np.round(np.mean(history), 3))
       results[benchmark_model_name + "_std"].append(np.round(np.std(history), 3))
