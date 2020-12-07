@@ -162,7 +162,13 @@ if __name__=="__main__":
       return False
     return True
 
+  parent_dir = pathlib.Path(__file__).parent
+  results_dir = parent_dir / "results"
+  zoo_dir = parent_dir / "zoo"
+
   parser = argparse.ArgumentParser(description='Evaluate pre-trained agents against each other.')
+  parser.add_argument('--zoodir', help='path of zoo dir', type=str, default=zoo_dir)
+  parser.add_argument('--resultdir', help='path of result dir', type=str, default=results_dir)
   parser.add_argument('--resultfilename', help='name of result csv', type=str, default="results")
   parser.add_argument('--benchmark', help='set of agents to benchmark against (pretrained or extended)', type=str, default="")
   parser.add_argument('--evaltest', action='store_true', help='evaluate each test agent against itself and other test agents (may not be used with --benchmark)', default=False)
@@ -187,12 +193,15 @@ if __name__=="__main__":
 
   render_mode = args.render
 
-  parent_dir = pathlib.Path(__file__).parent
-  zoo_dir = parent_dir / "zoo"
-  results_dir = parent_dir / "results"
+  results_dir = args.resultdir
   if not os.path.exists(results_dir):
     os.makedirs(results_dir)
 
+  zoo_dir = args.zoodir
+  if not os.path.exists(zoo_dir):
+    raise Exception('zoo directory does not exist')
+
+  # zoo directory must contain pretrained and extended models
   pretrained_dir = zoo_dir / "pretrained"
   extended_dir = zoo_dir / "extended"
   # Example:
