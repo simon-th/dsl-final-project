@@ -127,8 +127,7 @@ def evaluate_agents(test_agents, benchmark_agents, render_mode=False, n_trials=1
 
       # print("history dump:", history)
 
-      # print(test_model_name+" scored", np.round(np.mean(history), 3), "±", np.round(np.std(history), 3), "vs",
-        # benchmark_agent, "over", args.trials, "trials.")
+      print(test_model_name, "vs", benchmark_agent, ":", np.round(np.mean(history), 3), "±", np.round(np.std(history), 3))
 
       results[benchmark_model_name + "_mean"].append(np.round(np.mean(history), 3))
       results[benchmark_model_name + "_std"].append(np.round(np.std(history), 3))
@@ -176,7 +175,7 @@ if __name__=="__main__":
   parser.add_argument('--day', action='store_true', help='daytime colors?', default=False)
   parser.add_argument('--pixel', action='store_true', help='pixel rendering effect? (note: not pixel obs mode)', default=False)
   parser.add_argument('--seed', help='random seed (integer)', type=int, default=721)
-  parser.add_argument('--trials', help='number of trials (default 1000)', type=int, default=1000)
+  parser.add_argument('--trials', help='number of trials (default 500)', type=int, default=500)
 
   args = parser.parse_args()
 
