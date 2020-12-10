@@ -11,3 +11,7 @@ make pip-install-requirements
 ```
 
 After installation, all of the Makefile targets for slimevolleygym should work.
+
+## Results and Final Report
+
+Medium Article: [Slime vs Me, Myself, & I](https://anissa321.medium.com/slime-vs-me-myself-i-feaa81d6d099)
