@@ -1,0 +1,4 @@
+,ppo_obs_noise_mean,ppo_obs_noise_std,ppo_sp_obs_noise_mean,ppo_sp_obs_noise_std,ga_sp_obs_noise_mean,ga_sp_obs_noise_std
+ppo_obs_noise,0.015,1.313,-0.2,2.402,1.22,2.287
+ppo_sp_obs_noise,0.32,2.078,0.33,2.171,4.11,1.004
+ga_sp_obs_noise,-1.19,2.426,-4.06,1.037,-0.045,2.481

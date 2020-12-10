@@ -84,7 +84,6 @@ def rollout(env, policy0, policy1, render_mode=False):
     # uses a 2nd (optional) parameter for step to put in the other action
     # and returns the other observation in the 4th optional "info" param in gym's step()
     obs0, reward, done, info = env.step(action0, action1)
-    # print(obs0)
     obs1 = info['otherObs']
 
     total_reward += reward
@@ -124,9 +123,9 @@ if __name__=="__main__":
 
   PATH = {
     "baseline": None,
-    "ppo": parent_dir / "zoo/pretrained/ppo.zip",
-    "cma": parent_dir / "zoo/pretrained/cmaes.json",
-    "ga": parent_dir / "zoo/pretrained/ga_sp.json",
+    "ppo": parent_dir / "zoo/ppo/best_model.zip",
+    "cma": parent_dir / "zoo/cmaes/slimevolley.cma.64.96.best.json",
+    "ga": parent_dir / "zoo/ga_sp/ga.json",
     "random": None,
   }
 

@@ -1,0 +1,4 @@
+,baseline_mean,baseline_std,ppo_mean,ppo_std,ppo_sp_mean,ppo_sp_std,ga_sp_mean,ga_sp_std,random_mean,random_std
+ppo_extended,1.0,0.0,0.0,0.0,0.0,0.0,-2.0,0.0,5.0,0.0
+ppo_sp_extended,1.0,0.0,-1.0,0.0,-1.0,0.0,-1.0,0.0,5.0,0.0
+ga_sp_extended,0.0,0.0,5.0,0.0,4.0,0.0,-1.0,0.0,5.0,0.0
