@@ -1,0 +1,6 @@
+,ppo_extended_mean,ppo_extended_std,ppo_sp_extended_mean,ppo_sp_extended_std,ga_sp_extended_mean,ga_sp_extended_std
+ppo_spike_best,-0.13,0.56,-2.24,1.756,-4.77,0.487
+ppo_sp_spike_best,4.66,0.587,-2.225,1.666,-2.065,1.916
+ppo_spike_final,-0.13,0.56,-2.235,1.761,-4.77,0.487
+ppo_sp_spike_final,4.66,0.587,-2.255,1.67,-2.075,1.941
+ga_sp_spike,3.875,1.4,2.235,1.539,-0.39,0.91

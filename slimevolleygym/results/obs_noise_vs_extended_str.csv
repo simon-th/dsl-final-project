@@ -1,0 +1,4 @@
+,ppo_extended,ppo_sp_extended,ga_sp_extended
+ppo_obs_noise,-1.124 ± 1.058,-1.904 ± 1.656,-4.376 ± 0.896
+ppo_sp_obs_noise,-2.548 ± 1.941,-2.104 ± 1.571,-4.183 ± 1.065
+ga_sp_obs_noise,-1.693 ± 2.377,-3.713 ± 1.271,-4.977 ± 0.15
